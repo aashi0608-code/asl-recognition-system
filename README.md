@@ -22,39 +22,44 @@ A confidence-margin threshold automatically decides, frame by frame, whether the
 A significant part of this project involved diagnosing and fixing a **train-deployment domain gap** — models scored 98-100% on validation data but dropped to 8-17% on real webcam input. This was resolved through targeted real-world data augmentation and hyperparameter tuning.
 
 ## Architecture
-Camera Feed
-│
-▼
-MediaPipe Hand Detection
-│
-├── Letter Model (Random Forest on normalized landmarks)
-└── Digit Model (YOLOv8n-cls on cropped hand region)
-│
-▼
-Confidence-Based Mode Selection
-│
-▼
-Stability-Gated Sign Confirmation (~1 sec hold)
-│
-▼
-Sentence Assembly (space gesture / keyboard delete)
-│
-▼
-Text-to-Speech Output
 
+```
+Camera Feed
+    │
+    ▼
+MediaPipe Hand Detection
+    │
+    ├── Letter Model (Random Forest on normalized landmarks)
+    └── Digit Model (YOLOv8n-cls on cropped hand region)
+    │
+    ▼
+Confidence-Based Mode Selection
+    │
+    ▼
+Stability-Gated Sign Confirmation (~1 sec hold)
+    │
+    ▼
+Sentence Assembly (space gesture / keyboard delete)
+    │
+    ▼
+Text-to-Speech Output
+```
 
 ## Project Structure
-├── main.py # Entry point — runs the live pipeline
-├── pipeline.py # Mode-switching, stability tracking, sentence assembly
-├── letter_inference.py # MediaPipe landmark extraction + Random Forest prediction
-├── digit_inference.py # Hand cropping + YOLO digit prediction
-├── tts.py # Text-to-speech wrapper
+
+```
+├── main.py                  # Entry point — runs the live pipeline
+├── pipeline.py              # Mode-switching, stability tracking, sentence assembly
+├── letter_inference.py      # MediaPipe landmark extraction + Random Forest prediction
+├── digit_inference.py       # Hand cropping + YOLO digit prediction
+├── tts.py                   # Text-to-speech wrapper
 ├── models/
-│ ├── best_model.pkl # Trained Random Forest (letters)
-│ └── yolo_digits.pt # Fine-tuned YOLOv8n-cls (digits)
-├── letters.ipynb # Letter model training & evaluation
-├── digits.ipynb # Digit model comparison (7 architectures)
-└── combined_pipeline.ipynb # Integration and testing notebook
+│   ├── best_model.pkl       # Trained Random Forest (letters)
+│   └── yolo_digits.pt       # Fine-tuned YOLOv8n-cls (digits)
+├── letters.ipynb            # Letter model training & evaluation
+├── digits.ipynb             # Digit model comparison (7 architectures)
+└── combined_pipeline.ipynb  # Integration and testing notebook
+```
 
 
 ## Setup
